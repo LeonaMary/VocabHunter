@@ -16,7 +16,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.6'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -32,7 +32,6 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'net.researchgate:gradle-release:2.6.0'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
         classpath 'gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0'
     }
 }
@@ -49,7 +48,6 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
-    apply plugin: 'org.junit.platform.gradle.plugin'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -66,8 +64,12 @@ subprojects {
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
 
+    test {
+        useJUnitPlatform()
+    }
+
     pmd {
-        toolVersion = '6.0.1'
+        toolVersion = '6.1.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
@@ -82,7 +84,7 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = '3.1.1'
+        toolVersion = '3.1.2'
         effort = 'max'
         reportLevel = 'medium'
     }
@@ -96,21 +98,12 @@ subprojects {
 
     jacoco {
         toolVersion = '0.8.0'
-        applyTo junitPlatformTest
     }
 
-    if (it.name in ['core', 'gui']) {
-        jacocoTestReport {
-            reports {
-                xml.enabled true
-                xml.destination file("${buildDir}/reports/jacoco/report.xml")
-            }
-        }
-    }
-
-    junitPlatformTest {
-        jacoco {
-            destinationFile = file("$buildDir/jacoco/test.exec")
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
         }
     }
 
