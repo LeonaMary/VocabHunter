@@ -15,7 +15,7 @@ allprojects {
 
 wrapper {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '4.9'
+    gradleVersion = '4.10.2'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -31,7 +31,7 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
         classpath 'net.researchgate:gradle-release:2.6.0'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
-        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.2'
+        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.4'
     }
 }
 
@@ -56,10 +56,10 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.0'
-        testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.0'
-        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.0'
-        testCompile 'org.mockito:mockito-junit-jupiter:2.21.0'
+        testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+        testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+        testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
 
@@ -68,13 +68,13 @@ subprojects {
     }
 
     pmd {
-        toolVersion = '6.3.0'
+        toolVersion = '6.8.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '8.12'
+        toolVersion = '8.13'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -83,7 +83,7 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = '3.1.6'
+        toolVersion = '3.1.8'
         effort = 'max'
         reportLevel = 'medium'
     }
